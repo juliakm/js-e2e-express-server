@@ -7,13 +7,14 @@
     - main
     
     pool:
-      name: myAgentPool
+      vmImage: ubuntu-latest
     
     steps:
     - task: NodeTool@0
       inputs:
         versionSpec: '10.x'
       displayName: 'Install Node.js'
+    - script: echo $(Build.BuildNumber)
     
     # - script: |
     #     npm install
