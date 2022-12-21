@@ -7,7 +7,7 @@
     - main
     
     pool:
-      vmImage: 'ubuntu-latest'
+      name: myAgentPool
     
     steps:
     - task: NodeTool@0
