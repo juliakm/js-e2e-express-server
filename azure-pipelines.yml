@@ -8,9 +8,12 @@
     trigger:
     - main
     
-    pool:
-      vmImage: ubuntu-latest
+    # pool:
+    #   vmImage: ubuntu-latest
     
+    pool:
+      name: myAgentPool   
+          
     steps:
     - task: NodeTool@0
       inputs:
