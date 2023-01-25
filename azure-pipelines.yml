@@ -12,7 +12,7 @@
     #   vmImage: ubuntu-latest
     
     pool:
-      name: myACIAgentPool   
+      name: MyJanACIAgentPool  
           
     steps:
     - task: NodeTool@0
