@@ -41,19 +41,13 @@
         contents: |
            src/*
            public/*
+           package.json
         targetFolder: '$(Build.ArtifactStagingDirectory)/npm'
       displayName: 'Copy project files'
-    
-    # - task: CopyFiles@2
-    #   inputs:
-    #     sourceFolder: '$(Build.SourcesDirectory)'
-    #     contents: 'package.json' 
-    #     targetFolder: $(Build.ArtifactStagingDirectory)/npm
-    #   displayName: 'Copy package.json'
     
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: npm
-        targetPath: '$(Build.ArtifactStagingDirectory)npm'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
         publishLocation: 'pipeline'
       displayName: 'Publish npm artifact'
