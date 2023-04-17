@@ -38,9 +38,11 @@
     - task: CopyFiles@2
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
-        contents: '*.tgz' 
-        targetFolder: $(Build.ArtifactStagingDirectory)
-      displayName: 'Copy npm package'
+        contents: |
+           src/*
+           public/*
+        targetFolder: '$(Build.ArtifactStagingDirectory)/npm'
+      displayName: 'Copy project files'
     
     # - task: CopyFiles@2
     #   inputs:
@@ -51,6 +53,7 @@
     
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: npm
+        targetPath: '$(Build.ArtifactStagingDirectory)npm'
         publishLocation: 'pipeline'
       displayName: 'Publish npm artifact'
