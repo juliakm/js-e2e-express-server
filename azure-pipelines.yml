@@ -29,25 +29,18 @@
         npm run build
       displayName: 'npm build'
 
-    # - task: Bash@3
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: 'env | sort'
-
-
     - task: CopyFiles@2
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
         contents: |
            src/*
            public/*
-           package.json
         targetFolder: '$(Build.ArtifactStagingDirectory)/npm'
       displayName: 'Copy project files'
     
     - task: PublishPipelineArtifact@1
       inputs:
-        artifactName: npm
+        artifactName: e2e-server
         targetPath: '$(Build.ArtifactStagingDirectory)'
         publishLocation: 'pipeline'
       displayName: 'Publish npm artifact'
