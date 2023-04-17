@@ -35,7 +35,7 @@
         contents: |
            src/*
            public/*
-        targetFolder: '$(Build.ArtifactStagingDirectory)/npm'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
       displayName: 'Copy project files'
     
     - task: PublishPipelineArtifact@1
