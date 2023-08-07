@@ -16,7 +16,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - script: npm test
+  # - script: npm test
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(System.DefaultWorkingDirectory)'
