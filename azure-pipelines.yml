@@ -46,6 +46,7 @@ steps:
       targetPath: '$(Build.ArtifactStagingDirectory)'
     displayName: 'Publish pipeline artifact'
 
+
   # Deploy to Azure Web App
   - task: AzureWebAppContainer@1
     inputs:
@@ -55,7 +56,6 @@ steps:
       imageName: 'azuredocs/aci-helloworld'               # Sample image
       tag: 'latest'                                       # Image tag
     displayName: 'Deploy to Azure Web App'
-
 
 # jobs:
 # - job: Build
