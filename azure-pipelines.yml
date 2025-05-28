@@ -50,11 +50,9 @@ steps:
   # Deploy to Azure Web App
   - task: AzureWebAppContainer@1
     inputs:
-      azureSubscription: '<Azure Service Connection Name>' # Replace with your Azure service connection name
-      appName: '<Azure Web App Name>'                     # Replace with your Azure Web App name
-      containerRegistry: 'mcr.microsoft.com'              # Microsoft Container Registry
-      imageName: 'azuredocs/aci-helloworld'               # Sample image
-      tag: 'latest'                                       # Image tag
+      azureSubscription: 'webappcontainers'
+      appName: 'webappcontainermay28'
+      containers: 'azuredocs/aci-helloworld'
     displayName: 'Deploy to Azure Web App'
 
 # jobs:
