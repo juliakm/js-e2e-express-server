@@ -52,7 +52,7 @@ steps:
     inputs:
       azureSubscription: 'webappcontainers'
       appName: 'webappcontainermay28'
-      containers: 'azuredocs/aci-helloworld'
+      containers: 'azuredocs/aci-helloworldbooya'
     displayName: 'Deploy to Azure Web App'
 
 # jobs:
