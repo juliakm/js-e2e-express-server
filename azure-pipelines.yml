@@ -1,0 +1,47 @@
+    trigger:
+      - main
+    
+    pool:
+      vmImage: 'ubuntu-latest'
+    
+    variables:
+      nodeVersion: '18.x'
+    
+    steps:
+      # Install Node.js
+      - task: UseNode@1
+        inputs:
+          version: $(nodeVersion)
+        displayName: 'Install Node.js'
+    
+      # Install dependencies
+      - script: |
+          npm install
+        displayName: 'Install dependencies'
+    
+      # Build the project
+      - script: |
+          npm run build
+        displayName: 'Build project'
+    
+      # Run tests
+      - script: |
+          npm test
+        displayName: 'Run tests'
+    
+      # Copy project files to artifact staging directory
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)'
+          contents: |
+            src/**
+            public/**
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+        displayName: 'Copy project files'
+    
+      # Publish pipeline artifact
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: 'nodejs-app'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+        displayName: 'Publish pipeline artifact'
