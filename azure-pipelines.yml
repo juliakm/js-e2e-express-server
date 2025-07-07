@@ -12,7 +12,7 @@ steps:
     condition: succeededOrFailed()
     displayName: 'Azure CLI -> DevOps CLI'
     inputs:
-      azureSubscription: 'my-test-service-connection'
+      azureSubscription: 'BAMI_jukullam(7678dbae-c3c9-4723-98f6-6b7812b09fe5)'
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
@@ -36,7 +36,7 @@ steps:
     condition: succeededOrFailed()
     displayName: 'List all builds in Azure DevOps project'
     inputs:
-      azureSubscription: 'my-test-service-connection'
+      azureSubscription: 'BAMI_jukullam(7678dbae-c3c9-4723-98f6-6b7812b09fe5)'
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: |
