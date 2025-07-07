@@ -1,18 +1,18 @@
 trigger:
   - main
 
-# parameters:
-# - name: serviceConnection
-#   displayName: Azure Service Connection Name
-#   type: string
-#   default: my-azure-subscription
+parameters:
+- name: serviceConnection
+  displayName: Azure Service Connection Name
+  type: string
+  default: my-test-service-connection
 
 steps:
   - task: AzureCLI@2
     condition: succeededOrFailed()
     displayName: 'Azure CLI -> DevOps CLI'
     inputs:
-      azureSubscription: 'BAMI_jukullam(7678dbae-c3c9-4723-98f6-6b7812b09fe5)'
+      azureSubscription: ${{ parameters.serviceConnection }}
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
@@ -36,7 +36,7 @@ steps:
     condition: succeededOrFailed()
     displayName: 'List all builds in Azure DevOps project'
     inputs:
-      azureSubscription: 'BAMI_jukullam(7678dbae-c3c9-4723-98f6-6b7812b09fe5)'
+      azureSubscription: ${{ parameters.serviceConnection }}
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: |
