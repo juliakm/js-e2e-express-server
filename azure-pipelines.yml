@@ -1,47 +1,99 @@
-    trigger:
-      - main
+trigger:
+  - main
+
+# parameters:
+# - name: serviceConnection
+#   displayName: Azure Service Connection Name
+#   type: string
+#   default: my-azure-subscription
+
+steps:
+  - task: AzureCLI@2
+    condition: succeededOrFailed()
+    displayName: 'Azure CLI -> DevOps CLI'
+    inputs:
+      azureSubscription: 'my-test-service-connection'
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        Write-Host "Using logged-in Azure CLI session..."
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az devops configure$($PSStyle.Reset)"
+        az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
+        az devops configure -l
+        
+        Write-Host "`nUse Azure DevOps CLI (az devops) to list projects in the organization '$(System.CollectionUri)'..."
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az devops project list$($PSStyle.Reset)"
+        az devops project list --query "value[].{Name:name, Id:id}" `
+                               -o table
+        
+        Write-Host "`nUse Azure DevOps CLI (az pipelines) to list pools in the organization '$(System.CollectionUri)'..."
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az pipelines pool list$($PSStyle.Reset)"
+        az pipelines pool list --query "[].{Id:id, Name:name}" `
+                               -o table
+      failOnStandardError: true
+
+  - task: AzureCLI@2
+    condition: succeededOrFailed()
+    displayName: 'List all builds in Azure DevOps project'
+    inputs:
+      azureSubscription: 'my-test-service-connection'
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        Write-Host "Using logged-in Azure CLI session..."
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az devops configure$($PSStyle.Reset)"
+        az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
+        az devops configure -l
+
+        Write-Host "`nListing all builds in the specified Azure DevOps organization and project..."
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az pipelines build list$($PSStyle.Reset)"
+        az pipelines build list --organization $(System.CollectionUri) --project $(System.TeamProject) -o table
+      failOnStandardError: true
+
+    # trigger:
+    #   - main
     
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     
-    variables:
-      nodeVersion: '18.x'
+    # variables:
+    #   nodeVersion: '18.x'
     
-    steps:
-      # Install Node.js
-      - task: UseNode@1
-        inputs:
-          version: $(nodeVersion)
-        displayName: 'Install Node.js'
+    # steps:
+    #   # Install Node.js
+    #   - task: UseNode@1
+    #     inputs:
+    #       version: $(nodeVersion)
+    #     displayName: 'Install Node.js'
     
-      # Install dependencies
-      - script: |
-          npm install
-        displayName: 'Install dependencies'
+    #   # Install dependencies
+    #   - script: |
+    #       npm install
+    #     displayName: 'Install dependencies'
     
-      # Build the project
-      - script: |
-          npm run build
-        displayName: 'Build project'
+    #   # Build the project
+    #   - script: |
+    #       npm run build
+    #     displayName: 'Build project'
     
-      # Run tests
-      - script: |
-          npm test
-        displayName: 'Run tests'
+    #   # Run tests
+    #   - script: |
+    #       npm test
+    #     displayName: 'Run tests'
     
-      # Copy project files to artifact staging directory
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: '$(Build.SourcesDirectory)'
-          contents: |
-            src/**
-            public/**
-          targetFolder: '$(Build.ArtifactStagingDirectory)'
-        displayName: 'Copy project files'
+    #   # Copy project files to artifact staging directory
+    #   - task: CopyFiles@2
+    #     inputs:
+    #       sourceFolder: '$(Build.SourcesDirectory)'
+    #       contents: |
+    #         src/**
+    #         public/**
+    #       targetFolder: '$(Build.ArtifactStagingDirectory)'
+    #     displayName: 'Copy project files'
     
-      # Publish pipeline artifact
-      - task: PublishPipelineArtifact@1
-        inputs:
-          artifactName: 'nodejs-app'
-          targetPath: '$(Build.ArtifactStagingDirectory)'
-        displayName: 'Publish pipeline artifact'
+    #   # Publish pipeline artifact
+    #   - task: PublishPipelineArtifact@1
+    #     inputs:
+    #       artifactName: 'nodejs-app'
+    #       targetPath: '$(Build.ArtifactStagingDirectory)'
+    #     displayName: 'Publish pipeline artifact'
