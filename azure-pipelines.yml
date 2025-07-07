@@ -5,18 +5,18 @@ parameters:
 - name: serviceConnection
   displayName: Azure Service Connection Name
   type: string
-  default: my-test-service-connection
+  default: BAMI-service-conn-test-july
 
 steps:
 # Specify python version
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-    architecture: 'x64'
+# - task: UsePythonVersion@0
+#   inputs:
+#     versionSpec: '3.x'
+#     architecture: 'x64'
 
-# Update to latest Azure CLI version
-- pwsh: pip install --pre azure-cli
-  displayName: 'Upgrade Azure CLI'
+# # Update to latest Azure CLI version
+# - pwsh: pip install --pre azure-cli
+#   displayName: 'Upgrade Azure CLI'
   
 - task: AzureCLI@2
   condition: succeededOrFailed()
