@@ -5,7 +5,7 @@ parameters:
 - name: serviceConnection
   displayName: Azure Service Connection Name
   type: string
-  default: julia-cli
+  default: sc-for-julia
 
 steps:
   - task: AzureCLI@2
