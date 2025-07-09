@@ -5,7 +5,7 @@ parameters:
 - name: serviceConnection
   displayName: Azure Service Connection Name
   type: string
-  default: BAMI-service-conn-test-july
+  default: julia-cli
 
 steps:
   - task: AzureCLI@2
