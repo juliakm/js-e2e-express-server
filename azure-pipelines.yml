@@ -38,7 +38,7 @@ steps:
           $groupId = az pipelines variable-group list --group-name "kubernetes" --query "[].id" -o tsv 2>$null
           
           if ([string]::IsNullOrEmpty($groupId)) {
-            Write-Host "Variable group 'kubernetes' not found in project '$projectName'"
+            Write-Host "Variable group 'julia-vars' not found in project '$projectName'"
             # List all variable groups to see what's available
             Write-Host "Available variable groups:"
             az pipelines variable-group list --query "[].{Name:name, Id:id}" -o table
