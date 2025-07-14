@@ -35,7 +35,7 @@ steps:
         # Test access by listing variable groups directly
         Write-Host "`nListing variable groups..."
         try {
-          $groupId = az pipelines variable-group list --group-name "kubernetes" --query "[].id" -o tsv 2>$null
+          $groupId = az pipelines variable-group list --group-name "julia-vars" --query "[].id" -o tsv 2>$null
           
           if ([string]::IsNullOrEmpty($groupId)) {
             Write-Host "Variable group 'julia-vars' not found in project '$projectName'"
