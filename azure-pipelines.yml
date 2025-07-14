@@ -1,6 +1,9 @@
 trigger:
   - main
 
+variables:
+- name: variableGroupId
+
 parameters:
 - name: serviceConnection
   displayName: Azure Service Connection Name
@@ -21,16 +24,7 @@ steps:
         az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
         az devops configure -l
 
-        Write-Host "`nUse Azure DevOps CLI (az devops) to list projects in the organization '$(System.CollectionUri)'..."
-        Write-Host "$($PSStyle.Formatting.FormatAccent)az devops project list$($PSStyle.Reset)"
-        az devops project list --query "value[].{Name:name, Id:id}" `
-                               -o table
-   
-        Write-Host "`nUse Azure DevOps CLI (az pipelines) to list pools in the organization '$(System.CollectionUri)'..."
-        Write-Host "$($PSStyle.Formatting.FormatAccent)az pipelines pool list$($PSStyle.Reset)"
-        az pipelines pool list --query "[].{Id:id, Name:name}" `
-                               -o table
-      failOnStandardError: true
+        ##vso[task.setvariable variable=variableGroupId]$(az pipelines variable-group list --group-name kubernetes --query [].id -o tsv)"
 
   # - task: AzureCLI@2
   #   displayName: 'Azure CLI -> Azure DevOps REST API'
