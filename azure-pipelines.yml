@@ -18,7 +18,9 @@ steps:
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: |
+        Write-Host "$($PSStyle.Formatting.FormatAccent)az devops configure$($PSStyle.Reset)"
         az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
+        az devops configure -l
         
         $groupId = az pipelines variable-group list --group-name "kubernetes" --query "[].id" -o tsv
         if ([string]::IsNullOrEmpty($groupId)) {
